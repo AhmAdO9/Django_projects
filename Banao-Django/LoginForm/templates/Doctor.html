@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous"
+  />
+</head>
+<body>
+  <nav style="position: sticky;top: 0px;z-index: 1;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">LogIn</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#"
+          >Home <span class="sr-only">(current)</span></a
+        >
+      
+      </div>
+    </div>
+   
+  </nav>
+  {% for message in messages %}
+  <div class= "alert {{message.tags}} alert-dismissible fade show" role="alert">
+    <strong>Message: </strong>{{message}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endfor %}
+    <div class="container mx-3" style="display: inline-flex;flex-direction:column;">
+      <h1>Hello Doctor!</h1>
+ 
+    
+      
+{% for i in person %}
+Username: {{i.Username}}<br>
+First Name: {{i.First_name}}<br>
+Last Name: {{i.Last_name}}<br>
+Email: {{i.Email}}<br>
+Address: {{i.Address}}<br>
+
+
+<div class="card" style="width: 279px; height: 18em;
+">
+    <img
+    
+      src="{{i.Dp.url}}"
+      style="height: 18em; width: 17em"
+      class="card-img-top"
+      alt="..."
+    />
+
+  
+{% endfor %}
+</div><br>
+<form action="Logout" >
+    <button class="btn btn-primary" type="submit" 
+ class="btn btn-primary">Logout</button>
+</form>
+</div>
+
+<div class="container my-3 mx-3" style="display: inline-flex;flex-direction: column;" >
+  <h2>Blog..</h2>
+<form action="post" method="post">{% csrf_token %}
+ 
+    <div class="form-group">
+      <label for="exampleFormControlInput1">Title</label>
+      <input
+        type="title"
+        class="form-control"
+        id="exampleFormControlInput1"
+        placeholder="Title"
+        name="title"
+        value=""
+      />
+    </div>
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" name="dp11" id="inputGroupFile0111"
+        aria-describedby="inputGroupFileAddon011">
+      <label class="custom-file-label" for="inputGroupFile0111">Choose file</label>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Categories</label>
+      <select disabled="true" class="form-control" id="exampleFormControlSelect1" name="categor">
+        <option selected >Choose...</option>
+        <option value="Mental Health">Mental Health</option>
+        <option value="Heart Disease">Heart Disease</option>
+        <option value="Covid-19">Covid-19</option>
+        <option value="Immunization">Immunization</option>
+      </select>
+      
+  
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Summary</label>
+        <textarea disabled="true"
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          rows="2"
+          name="sum"
+        ></textarea>
+      </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea2">Content</label>
+      <textarea disabled="true"
+        class="form-control"
+        id="exampleFormControlTextarea2"
+        rows="3"
+        name="cont"
+      
+      ></textarea>
+    </div>
+    <div class="form-group">
+      <label for="exampleFormControlauthor1">Author</label>
+      <input
+        type="title"
+        class="form-control"
+        id="exampleFormControlauthor1"
+        placeholder="author"
+        name="author"
+        value=""
+        required="true"
+      />
+    </div>
+    <button id="post"  disabled="true" class="btn btn-primary" type="submit">Post</button>
+    <button class="btn btn-primary" disabled="true" type="submit" id="save">save</button>
+  </form>
+
+</div>
+<script
+src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"
+></script>
+<script
+src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"
+></script>
+<script
+src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"
+></script>
+<script>
+
+  $("#exampleFormControlInput1").change(function(event){
+    if(event.target.value !=""){ document.getElementById("save").removeAttribute("disabled")}
+  }
+)
+$('#exampleFormControlInput1').change(function(event){
+  if(event.target.value !=""){ document.getElementById("exampleFormControlSelect1").removeAttribute("disabled")}
+})
+$('#exampleFormControlSelect1').change(function(event){
+  if(event.target.value !=""){ document.getElementById("exampleFormControlTextarea1").removeAttribute("disabled")}
+})
+$("#exampleFormControlTextarea1").change(function(){
+  if(event.target.value !=""){ document.getElementById("exampleFormControlTextarea2").removeAttribute("disabled")}
+})
+$("#exampleFormControlTextarea2").change(function(){
+  if(event.target.value !=""){ document.getElementById("post").removeAttribute("disabled")}
+})
+$('#Draft').popover()
+$('#exampleFormControlSelect1').change(function(){
+  let main = $('#exampleFormControlSelect1').val()
+  $('#exampleFormControlSelect1').attr('value',main)
+
+})
+
+
+  
+</script>
+</body>
+</html> 

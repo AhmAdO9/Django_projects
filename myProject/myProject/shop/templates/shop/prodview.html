@@ -1,0 +1,26 @@
+{% extends 'shop/basic.html' %}
+
+{%block name %} About Us {%endblock %}
+{% block title %} About Us {% endblock %}
+{% block body %}
+
+<div class="container">
+<div class="card" style="width: 279px; height: 29em">
+    <img
+      src="/media/{{prod.image}} "
+      style="height: 18em; width: 17em"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{prod.product_name}}</h5>
+      <p class="card-text">{{prod.desc}}</p>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+
+{% block css %}
+
+{% endblock %}

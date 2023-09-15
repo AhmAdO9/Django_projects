@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous"
+    />
+
+    <title>Hello, world!</title>
+    <style>
+      .col-md-3 {
+        display: inline-block;
+        margin-left: -4px;
+        width: 40em;
+      }
+      .carousel-indicators .active {
+        background-color: rgb(5, 5, 5);
+      }
+      .col-md-3 img {
+        width: 100%;
+        height: auto;
+      }
+      body .carousel-indicator li {
+        background-color: rgb(8, 8, 8);
+      }
+      body .carousel-indicators {
+        bottom: 0;
+      }
+      body .carousel-control-prev-icon,
+      body .carousel-control-next-icon {
+        background-color: rgb(12, 12, 12);
+      }
+      body .no-padding {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .btn {
+        background-color: rgb(43, 41, 41);
+        border: rgb(43, 41, 41);
+      }
+      .carousel-indicators {
+        margin: 0;
+        position: absolute;
+        top: 25em;
+      }
+      .carousel-inner {
+        height: 27em;
+      }
+      .carousel-control-prev {
+        top: auto;
+        bottom: auto;
+      }
+      .carousel-control-next {
+        top: auto;
+        bottom: auto;
+      }
+      .card {
+        width: 279px;
+        height: 29em;
+      }
+      .card img {
+        width: 18em;
+        height: 278px;
+      }
+
+      .check a{
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    {% load static %}
+    <nav
+      style="position: sticky; top: 0; z-index: 1"
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+    >
+      <a class="navbar-brand" href="">My Awesome Cart</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href=""
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="about">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tracker">Tracker</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact">Contact</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+        <button
+          id="tool"
+          style="margin-left: 2px"
+          type="button"
+          class="btn btn-secondary"
+          data-toggle="popover"
+          data-placement="bottom"
+          data-html="true"
+        >
+          <span id="length">Cart</span>
+        </button>
+      </div>
+    </nav>
+
+    {% for products, range, nSlides in allProds %}
+    <div class="container">
+      <h1>{{products.0.category}}</h1>
+      <div class="row">
+        <div
+          id="demo{{forloop.counter}}"
+          class="carousel slide my-3"
+          data-ride="carousel"
+        >
+          <ul class="carousel-indicators">
+            {% for i in nSlides %}
+            <li
+              data-target="#demo{{forloop.parentloop.counter}} "
+              data-slide-to="{{i}}"
+            ></li>
+            {%endfor %}
+          </ul>
+
+          <div class="container carousel-inner no-padding">
+            <div class="carousel-item active">
+              {% for i in products %}
+
+              <div class="col-xs-3 col-sm-3 col-md-3">
+                <div class="card" style="width: 279px; height: 29em">
+                  <img
+                    src="/media/{{i.image}} "
+                    style="height: 18em; width: 17em"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-body">
+                    <h5 class="card-title">{{i.product_name}}</h5>
+                    <p class="card-text">{{i.desc}}</p>
+                    <span class="lart" id="divpr{{i.id}}"
+                      ><button id="pr{{i.id}}" class="btn btn-primary cart">
+                        Add to Cart
+                      </button></span
+                    >
+                    <a href="productview/{{i.id}}"
+                      ><button id="qv{{i.id}}" class="btn btn-primary sart">
+                        QuickView
+                      </button></a
+                    >
+                  </div>
+                </div>
+              </div>
+              {% if forloop.counter|divisibleby:4%}
+            </div>
+            <div class="carousel-item">{% endif %} {% endfor %}</div>
+          </div>
+        </div>
+
+        <a
+          style="padding-top: 200px"
+          class="carousel-control-prev"
+          href="#demo{{forloop.counter}} "
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a
+          style="padding-top: 200px"
+          class="carousel-control-next"
+          href="#demo{{forloop.counter}}"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </a>
+      </div>
+    </div>
+
+    {% endfor %}
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+      integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      if (localStorage.getItem("cart") == null) {
+        var cart = {};
+      } else {
+        var cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      $(".lart").on("click", "button.cart", function () {
+        var idstr = this.parentElement.id.toString();
+        var cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart[idstr] == undefined) {
+          qty = 0;
+          name =
+            document.getElementById(idstr).previousElementSibling
+              .previousElementSibling.innerText;
+          cart[idstr] = [qty, name];
+          localStorage.setItem("cart", JSON.stringify(cart));
+        } else {
+          cart = JSON.parse(localStorage.getItem("cart"));
+          console.log(cart[idstr])
+          qty = cart[idstr][0];
+          name = cart[idstr][1];
+        }
+
+        var store = [];
+        for (var i in cart) {
+          store.push(Number(cart[i][0]));
+        }
+        s = store.reduce((a, b) => {
+          return a + b;
+        });
+        document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+
+        document.getElementById(idstr).innerHTML =
+          `<button class='btn btn-primary minus' id='minus${idstr}'>-</button>` +
+          "<span>" +
+          qty +
+          "</span>" +
+          `<button class='btn btn-primary plus' id='plus${idstr}'>+</button>`;
+      });
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      cart = JSON.parse(localStorage.getItem("cart"));
+
+      var store = [];
+      for (var i in cart) {
+        store.push(Number(cart[i][0]));
+      }
+
+      if (store.length == 0) {
+        s = 0;
+      } else {
+        s = store.reduce((a, b) => {
+          return a + b;
+        });
+      }
+      document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+      $(".lart").on("click", "button.minus", function () {
+        idstr = this.parentElement.id.toString();
+        var cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart[idstr][0] > 0) {
+          cart[idstr][0] = cart[idstr][0] - 1;
+
+          document.getElementById(idstr).innerHTML =
+            `<button class='btn btn-primary minus' id='minus${idstr}'>-</button>` +
+            "<span>" +
+            cart[idstr][0] +
+            "</span>" +
+            `<button class='btn btn-primary plus' id='plus${idstr}'>+</button>`;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          cart = JSON.parse(localStorage.getItem("cart"));
+          var store = [];
+          for (var i in cart) {
+            store.push(Number(cart[i][0]));
+          }
+          s = store.reduce((a, b) => {
+            return a + b;
+          });
+          document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+          cart = JSON.parse(localStorage.getItem("cart"));
+
+          var safe =
+            "<pre><button class='btn btn-primary'><a style='color:white' href='checkout'>checkout</a></button> <button id='sylla' class='btn btn-primary clr'>clearCart</button><br></pre>";
+          for (i in cart) {
+            var text =
+              document.getElementById(i).previousElementSibling
+                .previousElementSibling.innerText;
+            if (cart[i][0] == 0) {
+              continue;
+            }
+            var safe = safe + text + "(" + cart[i][0] + ")" + "<br>";
+          }
+          document.getElementById("tool").setAttribute("data-content", safe);
+          $("#tool").popover("show");
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      cart = JSON.parse(localStorage.getItem("cart"));
+      var store = [];
+      for (var i in cart) {
+        store.push(Number(cart[i][0]));
+      }
+      if (store.length == 0) {
+        s = 0;
+      } else {
+        s = store.reduce((a, b) => {
+          return a + b;
+        });
+      }
+      document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+
+      $(".lart").on("click", "button.plus", function () {
+        idstr = this.parentElement.id.toString();
+        var cart = JSON.parse(localStorage.getItem("cart"));
+        cart[idstr][0] = cart[idstr][0] + 1;
+        document.getElementById(idstr).innerHTML =
+          `<button class='btn btn-primary minus' id='minus${idstr}'>-</button>` +
+          "<span>" +
+          cart[idstr][0] +
+          "</span>" +
+          `<button class='btn btn-primary plus' id='plus${idstr}'>+</button>`;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        cart = JSON.parse(localStorage.getItem("cart"));
+        var store = [];
+        for (var i in cart) {
+          store.push(Number(cart[i][0]));
+        }
+        s = store.reduce((a, b) => {
+          return a + b;
+        });
+        document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+
+        safe =
+          "<pre><button  class='btn btn-primary'><a style='color:white' href='checkout'>checkout</a></button> <button id='sylla' class='btn btn-primary clr'>clearCart</button><br></pre>";
+        for (i in cart) {
+          var text =
+            document.getElementById(i).previousElementSibling
+              .previousElementSibling.innerText;
+          if (cart[i][0] == 0) {
+            continue;
+          }
+          var safe = safe + text + "(" + cart[i][0] + ")" + "<br>";
+        }
+        document.getElementById("tool").setAttribute("data-content", safe);
+        $("#tool").popover("show");
+      });
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      cart = JSON.parse(localStorage.getItem("cart"));
+      var store = [];
+      for (var i in cart) {
+        store.push(Number(cart[i][0]));
+      }
+      if (store.length == 0) {
+        s = 0;
+      } else {
+        s = store.reduce((a, b) => {
+          return a + b;
+        });
+      }
+      document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+      var safe = `<pre><button class='btn btn-primary check'><a href='checkout'>checkout</a></button> <button id='sylla' class='btn btn-primary clr'>clearCart</button><br></pre>`;
+      for (i in cart) {
+        var text =
+          document.getElementById(i).previousElementSibling
+            .previousElementSibling.innerText;
+        if (cart[i][0] == 0) {
+          continue;
+        }
+        var safe = safe + text + "(" + cart[i][0] + ")" + "<br>";
+      }
+      document.getElementById("tool").setAttribute("data-content", safe);
+      $("#tool").popover("show");
+
+
+
+      $(document).on("click", '#sylla',function(){
+        cart = JSON.parse(localStorage.getItem("cart"));
+          for ( idstr in cart){
+            document.getElementById(idstr).innerHTML = "<button id='pr{{i.id}}' class='btn btn-primary cart'>Add to Cart</button>"
+          }
+          localStorage.clear();
+          var cart = {};
+          localStorage.setItem("cart", JSON.stringify(cart));
+          var store = [];
+          for (var i in cart) {
+            store.push(Number(cart[i][0]));
+          }
+          if (store.length == 0) {
+            s = 0;
+          } else {
+            s = store.reduce((a, b) => {
+              return a + b;
+            });
+          }
+          document.getElementById("length").innerHTML = "Cart" + "(" + s + ")";
+         
+          var safe =
+            "<pre><button class='btn btn-primary check'><a href='checkout'>checkout</a></button> <button id='sylla' class='btn btn-primary clr'>clearCart</button><br></pre>";
+          document.getElementById("tool").setAttribute("data-content", safe);
+          $("#tool").popover("show");
+           } );
+  
+    
+      
+         
+         $("#tool").click(function(){
+          var safe = `<pre><button class='btn btn-primary check'><a href='checkout'>checkout</a></button> <button id='sylla' class='btn btn-primary clr'>clearCart</button><br></pre>`;
+      for (i in cart) {
+        var text =
+          document.getElementById(i).previousElementSibling
+            .previousElementSibling.innerText;
+        if (cart[i][0] == 0) {
+          continue;
+        }
+        var safe = safe + text + "(" + cart[i][0] + ")" + "<br>";
+      }
+      document.getElementById("tool").setAttribute("data-content", safe);
+      $("#tool").popover();
+         })
+    </script>
+  </body>
+</html>

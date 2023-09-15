@@ -1,0 +1,60 @@
+{% extends 'shop/basic.html' %} 
+{%block name %} About Us {%endblock %}
+ {% block title %} About Us {% endblock %} 
+ {% block css %}
+
+ </style>
+  {% endblock %}
+  {% block body %}
+
+
+  <div class="container my-2">
+<ul id="lizzy" class="list-group"> 
+</ul></div>
+<form action="/shop/checkout/" method="post">{%csrf_token%}
+  <div class="container my-2">
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input required="true" name= "emaily" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <button id="sbmt" type="submit" class="btn btn-primary">Submit</button></div>
+</form>
+{% endblock %} 
+
+{% block js %} 
+<script src="https://code.jquery.com/jquery-3.3.1.js"
+    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+<script>
+
+if(JSON.parse(localStorage.getItem("cart")) == undefined || Object.keys(JSON.parse(localStorage.getItem("cart"))).length == 0){
+    cart = {}
+    myStr = `<p>Your cart is empty!</p>`
+    $('#lizzy').append(myStr);
+}
+else{
+    var cart = JSON.parse(localStorage.getItem("cart"));
+    for (i in cart) {
+      qty = cart[i][0];
+      if(qty==0){
+        continue
+      }
+      name = cart[i][1];
+      myStr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+        ${name}
+        <span class="badge badge-primary badge-pill">${qty}</span>
+      </li>`;
+      $('#lizzy').append(myStr);
+    }
+}
+
+    
+
+
+  
+
+</script>
+
+{% endblock %} 
